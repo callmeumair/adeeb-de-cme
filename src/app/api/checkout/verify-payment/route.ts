@@ -42,7 +42,25 @@ export async function POST(req: Request) {
     );
 
     if (!isValid) {
+      console.warn('Invalid payment signature detected');
       return NextResponse.json({ error: 'Invalid payment signature' }, { status: 400 });
+    }
+
+    // Validate that all products exist
+    const productIds = items.map(item => item.productId);
+    const existingProducts = await prisma.product.findMany({
+      where: {
+        id: { in: productIds }
+      },
+      select: { id: true }
+    });
+
+    if (existingProducts.length !== productIds.length) {
+      const missingIds = productIds.filter(id => !existingProducts.some(p => p.id === id));
+      console.error('Products not found:', missingIds);
+      return NextResponse.json({ 
+        error: 'One or more products in the order could not be found' 
+      }, { status: 400 });
     }
 
     // Save order in database
