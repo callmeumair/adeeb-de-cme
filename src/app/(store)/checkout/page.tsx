@@ -101,15 +101,20 @@ export default function CheckoutPage() {
 
             const verifyData = await verifyRes.json();
             
+            if (!verifyRes.ok) {
+              throw new Error(verifyData?.error || `Verification failed with status ${verifyRes.status}`);
+            }
+
             if (verifyData.success) {
               clearCart();
               toast.success('Payment successful! Your order has been placed.');
-              router.push('/checkout/success');
+              setTimeout(() => router.push('/checkout/success'), 500);
             } else {
               throw new Error(verifyData?.error || 'Payment verification failed');
             }
           } catch (error: any) {
-            toast.error(error.message || 'Payment verification failed');
+            console.error('Payment verification error:', error);
+            toast.error(error.message || 'Payment verification failed. Please contact support.');
             setIsProcessing(false);
           }
         },

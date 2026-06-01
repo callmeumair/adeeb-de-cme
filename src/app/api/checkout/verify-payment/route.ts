@@ -46,38 +46,47 @@ export async function POST(req: Request) {
     }
 
     // Save order in database
-    const order = await prisma.order.create({
-      data: {
-        ...(userId ? { userId } : {}),
-        status: 'CONFIRMED',
-        paymentStatus: 'PAID',
-        razorpayOrderId: razorpay_order_id,
-        razorpayPaymentId: razorpay_payment_id,
-        subtotal,
-        tax: 0, // Calculate tax if needed
-        shipping,
-        total,
-        address: address as any, // Prisma Json handles object if typed correctly, cast to any to bypass strict type check for now
-        items: {
-          create: items.map(item => ({
-            productId: item.productId,
-            name: item.name,
-            size: item.size,
-            price: item.price,
-            quantity: item.quantity,
-            image: item.image,
-          }))
+    try {
+      const order = await prisma.order.create({
+        data: {
+          ...(userId ? { userId } : {}),
+          status: 'CONFIRMED',
+          paymentStatus: 'PAID',
+          razorpayOrderId: razorpay_order_id,
+          razorpayPaymentId: razorpay_payment_id,
+          subtotal,
+          tax: 0, // Calculate tax if needed
+          shipping,
+          total,
+          address: JSON.parse(JSON.stringify(address)), // Ensure proper JSON serialization
+          items: {
+            create: items.map(item => ({
+              productId: item.productId,
+              name: item.name,
+              size: item.size,
+              price: item.price,
+              quantity: item.quantity,
+              image: item.image || null,
+            }))
+          }
         }
-      }
-    });
+      });
 
-    // TODO: Send order confirmation email via resend if needed
+      // TODO: Send order confirmation email via resend if needed
 
-    return NextResponse.json({ success: true, orderId: order.id });
+      return NextResponse.json({ success: true, orderId: order.id });
+    } catch (dbError) {
+      console.error('Database error while creating order:', dbError);
+      throw dbError;
+    }
   } catch (error) {
     console.error('Error in verify-payment:', error);
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'Internal Server Error', details: process.env.NODE_ENV === 'development' ? String(error) : undefined },
       { status: 500 }
     );
   }
