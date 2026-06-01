@@ -92,7 +92,17 @@ export default function CheckoutPage() {
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
                 items,
-                address: data,
+                address: {
+                  name: data.name,
+                  phone: data.phone,
+                  line1: data.line1,
+                  line2: data.line2,
+                  city: data.city,
+                  state: data.state,
+                  pincode: data.pincode,
+                  country: data.country,
+                  email: data.email, // Include email for contact purposes
+                },
                 subtotal: total,
                 shipping: 0,
                 total,

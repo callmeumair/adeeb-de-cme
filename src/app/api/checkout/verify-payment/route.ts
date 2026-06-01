@@ -30,8 +30,11 @@ export async function POST(req: Request) {
       total: number;
     };
 
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !items || !address) {
-      return NextResponse.json({ error: 'Missing required parameters' }, { status: 400 });
+    // Validate address data
+    if (!address.name || !address.phone || !address.line1 || !address.city || !address.state || !address.pincode || !address.country) {
+      return NextResponse.json({ 
+        error: 'Missing required address fields' 
+      }, { status: 400 });
     }
 
     // Verify Signature
