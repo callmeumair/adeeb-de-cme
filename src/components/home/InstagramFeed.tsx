@@ -3,36 +3,19 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const tiles = [
-  { gradient: 'from-deep via-charcoal/80 to-deep' },
-  { gradient: 'from-charcoal via-deep/80 to-charcoal' },
-  { gradient: 'from-deep via-charcoal/60 to-deep' },
-  { gradient: 'from-charcoal via-deep/60 to-charcoal' },
-  { gradient: 'from-deep via-charcoal/80 to-deep' },
-  { gradient: 'from-charcoal via-deep/80 to-charcoal' },
+  { image: '/assets/pics/pic1.jpg' },
+  { image: '/assets/pics/pic2.jpg' },
+  { image: '/assets/pics/pic3.jpg' },
+  { image: '/assets/pics/pic4.jpg' },
+  { image: '/assets/pics/pic5.jpg' },
+  { image: '/assets/pics/pic6.jpg' },
+  { image: '/assets/pics/pic7.jpg' },
+  { image: '/assets/pics/pic8.jpg' },
+  { image: '/assets/pics/pic9.jpg' },
 ];
-
-function TileWatermark() {
-  return (
-    <svg
-      width="60"
-      height="100"
-      viewBox="0 0 60 100"
-      fill="none"
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.04] transition-opacity duration-500 group-hover:opacity-[0.08]"
-    >
-      <rect x="22" y="3" width="16" height="6" rx="1" stroke="#c9a84c" strokeWidth="0.8" />
-      <rect x="20" y="9" width="20" height="14" rx="1" stroke="#c9a84c" strokeWidth="0.8" />
-      <path
-        d="M26 23 L26 30 Q26 32 23 34 L12 42 Q8 44 8 49 L8 84 Q8 88 12 88 L48 88 Q52 88 52 84 L52 49 Q52 44 48 42 L37 34 Q34 32 34 30 L34 23"
-        stroke="#c9a84c"
-        strokeWidth="0.8"
-      />
-      <rect x="6" y="88" width="48" height="5" rx="1" stroke="#c9a84c" strokeWidth="0.8" />
-    </svg>
-  );
-}
 
 export function InstagramFeed() {
   const ref = useRef(null);
@@ -54,7 +37,7 @@ export function InstagramFeed() {
       </motion.div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-1">
+      <div className="grid grid-cols-3 gap-1">
         {tiles.map((tile, index) => (
           <motion.div
             key={index}
@@ -63,9 +46,14 @@ export function InstagramFeed() {
             transition={{ duration: 0.5, delay: index * 0.08 }}
           >
             <div
-              className={`aspect-square bg-gradient-to-br ${tile.gradient} relative group cursor-pointer overflow-hidden`}
+              className={`aspect-square relative group cursor-pointer overflow-hidden`}
             >
-              <TileWatermark />
+              <Image
+                src={tile.image}
+                alt={`Instagram post ${index + 1}`}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
 
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-all duration-500 flex items-center justify-center">

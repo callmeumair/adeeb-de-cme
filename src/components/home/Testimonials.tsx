@@ -52,8 +52,22 @@ export function Testimonials() {
   const currentTestimonial = testimonials[active];
 
   return (
-    <section className="py-24 section-padding bg-deep" ref={ref}>
-      <div className="max-w-3xl mx-auto text-center">
+    <section className="relative py-24 section-padding overflow-hidden" ref={ref}>
+      {/* Background Video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/assets/videos/video5.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark Overlay for readability */}
+      <div className="absolute inset-0 bg-deep/80 z-10" />
+
+      <div className="relative z-20 max-w-3xl mx-auto text-center">
         {/* Eyebrow */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
