@@ -1,12 +1,33 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { GoldDivider } from '@/components/ui/GoldDivider';
 
 const collections = [
-  { href: '/collections/oud-royale', label: 'Oud Royale' },
-  { href: '/collections/midnight-musk', label: 'Midnight Musk' },
-  { href: '/collections/rose-amber', label: 'Rose & Amber' },
-  { href: '/collections/bakhoor-noir', label: 'Bakhoor Noir' },
-  { href: '/shop?sort=newest', label: 'New Arrivals' },
+  {
+    href: '/collections/oud-royale',
+    label: 'Oud Royale',
+    image: '/assets/pics/collections/images.jpeg',
+  },
+  {
+    href: '/collections/midnight-musk',
+    label: 'Midnight Musk',
+    image: '/assets/pics/collections/shopping.jpeg',
+  },
+  {
+    href: '/collections/rose-amber',
+    label: 'Rose & Amber',
+    image: '/assets/pics/collections/shopping-2.jpeg',
+  },
+  {
+    href: '/collections/bakhoor-noir',
+    label: 'Bakhoor Noir',
+    image: '/assets/pics/collections/images.jpeg',
+  },
+  {
+    href: '/shop?sort=newest',
+    label: 'New Arrivals',
+    image: '/assets/pics/collections/shopping.jpeg',
+  },
 ];
 
 const customerCare = [
@@ -76,11 +97,18 @@ export function Footer() {
             <ul className="space-y-3">
               {collections.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-smoke hover:text-gold text-sm transition-colors duration-300"
-                  >
-                    {item.label}
+                  <Link href={item.href} className="group flex items-center gap-3">
+                    <span className="relative h-14 w-14 overflow-hidden border border-gold/10 bg-charcoal shrink-0">
+                      <Image
+                        src={item.image}
+                        alt={item.label}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </span>
+                    <span className="text-smoke group-hover:text-gold text-sm transition-colors duration-300">
+                      {item.label}
+                    </span>
                   </Link>
                 </li>
               ))}
