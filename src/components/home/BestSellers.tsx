@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Heart, ShoppingBag, Star } from 'lucide-react';
@@ -13,6 +14,7 @@ const mockProducts = [
     originalPrice: 6999,
     category: 'Oud',
     badge: 'BESTSELLER',
+    image: '/assets/pics/pic1.jpg',
     topNotes: ['Saffron', 'Bergamot'],
     heartNotes: ['Oud', 'Rose'],
     baseNotes: ['Musk', 'Amber'],
@@ -27,6 +29,7 @@ const mockProducts = [
     originalPrice: null,
     category: 'Musk',
     badge: 'NEW',
+    image: '/assets/pics/pic2.jpg',
     topNotes: ['Black Pepper', 'Cardamom'],
     heartNotes: ['White Musk', 'Orris'],
     baseNotes: ['Vetiver', 'Cedarwood'],
@@ -41,6 +44,7 @@ const mockProducts = [
     originalPrice: 7499,
     category: 'Rose',
     badge: 'SALE',
+    image: '/assets/pics/pic3.jpg',
     topNotes: ['Pink Pepper', 'Lychee'],
     heartNotes: ['Damask Rose', 'Peony'],
     baseNotes: ['Patchouli', 'Vanilla'],
@@ -55,6 +59,7 @@ const mockProducts = [
     originalPrice: null,
     category: 'Woody',
     badge: null,
+    image: '/assets/pics/pic4.jpg',
     topNotes: ['Bergamot', 'Elemi'],
     heartNotes: ['Amber', 'Labdanum'],
     baseNotes: ['Sandalwood', 'Benzoin'],
@@ -69,6 +74,7 @@ const mockProducts = [
     originalPrice: 9999,
     category: 'Oud',
     badge: 'LIMITED',
+    image: '/assets/pics/pic5.jpg',
     topNotes: ['Saffron', 'Cinnamon'],
     heartNotes: ['Cambodian Oud', 'Turkish Rose'],
     baseNotes: ['Musk', 'Ambergris'],
@@ -83,6 +89,7 @@ const mockProducts = [
     originalPrice: null,
     category: 'Rose',
     badge: null,
+    image: '/assets/pics/pic6.jpg',
     topNotes: ['Raspberry', 'Bergamot'],
     heartNotes: ['Bulgarian Rose', 'Jasmine'],
     baseNotes: ['Cashmeran', 'White Musk'],
@@ -97,6 +104,7 @@ const mockProducts = [
     originalPrice: null,
     category: 'Oriental',
     badge: 'NEW',
+    image: '/assets/pics/pic7.jpg',
     topNotes: ['Saffron', 'Nutmeg'],
     heartNotes: ['Oud', 'Leather'],
     baseNotes: ['Amber', 'Tonka Bean'],
@@ -111,6 +119,7 @@ const mockProducts = [
     originalPrice: 3999,
     category: 'Musk',
     badge: null,
+    image: '/assets/pics/pic8.jpg',
     topNotes: ['Aldehydes', 'Lily'],
     heartNotes: ['White Musk', 'Iris'],
     baseNotes: ['Sandalwood', 'Cedarwood'],
@@ -134,36 +143,6 @@ const categoryAccents: Record<string, string> = {
   Rose: 'from-rose-900/30',
   Woody: 'from-emerald-900/30',
   Oriental: 'from-orange-900/30',
-};
-
-function BottleSilhouette({ category }: { category: string }) {
-  const colors: Record<string, string> = {
-    Oud: '#d4a574',
-    Musk: '#a0a0a0',
-    Rose: '#c9748a',
-    Woody: '#7a9a6a',
-    Oriental: '#d4944c',
-  };
-  const color = colors[category] || '#c9a84c';
-
-  return (
-    <svg
-      width="80"
-      height="140"
-      viewBox="0 0 80 140"
-      fill="none"
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10"
-    >
-      <rect x="32" y="4" width="16" height="6" rx="1" stroke={color} strokeWidth="1" />
-      <rect x="29" y="10" width="22" height="16" rx="1.5" stroke={color} strokeWidth="1" />
-      <path
-        d="M34 26 L34 34 Q34 37 31 39 L18 48 Q14 51 14 56 L14 122 Q14 127 19 127 L61 127 Q66 127 66 122 L66 56 Q66 51 62 48 L49 39 Q46 37 46 34 L46 26"
-        stroke={color}
-        strokeWidth="1"
-      />
-      <rect x="12" y="127" width="56" height="6" rx="1" stroke={color} strokeWidth="1" />
-    </svg>
-  );
 }
 
 function StarRating({ rating }: { rating: number }) {
@@ -233,7 +212,7 @@ export function BestSellers() {
         </motion.div>
 
         {/* Product grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-7">
           {filtered.map((product, index) => (
             <motion.div
               key={product.id}
@@ -243,22 +222,30 @@ export function BestSellers() {
               layout
             >
               <motion.div
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.3 }}
-                className="group relative bg-charcoal overflow-hidden"
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                className="group relative overflow-hidden rounded-[1.35rem] border border-white/5 bg-[#111111] shadow-[0_18px_50px_rgba(0,0,0,0.35)]"
               >
                 {/* Image area */}
                 <div
-                  className={`aspect-[3/4] bg-gradient-to-br ${
+                  className={`relative aspect-[3/4] overflow-hidden bg-gradient-to-br ${
                     categoryAccents[product.category] || 'from-deep'
-                  } to-charcoal relative overflow-hidden`}
+                  } to-charcoal`}
                 >
-                  <BottleSilhouette category={product.category} />
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/10" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(201,168,76,0.18),transparent_38%)]" />
 
                   {/* Badge */}
                   {product.badge && (
                     <div
-                      className={`absolute top-3 left-3 px-3 py-1 text-[9px] tracking-[0.2em] uppercase font-body font-semibold ${
+                      className={`absolute top-3 left-3 z-10 px-3 py-1 text-[9px] tracking-[0.2em] uppercase font-body font-semibold rounded-sm ${
                         badgeColors[product.badge]
                       }`}
                     >
@@ -267,26 +254,26 @@ export function BestSellers() {
                   )}
 
                   {/* Hover actions */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 flex gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <button className="flex-1 flex items-center justify-center gap-2 bg-gold text-black py-3 text-[10px] tracking-[0.2em] uppercase font-body font-semibold hover:bg-gold-light transition-colors">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 flex gap-2 translate-y-0 lg:translate-y-full lg:group-hover:translate-y-0 transition-transform duration-300">
+                    <button className="flex-1 flex items-center justify-center gap-2 rounded-md bg-gold text-black py-3 text-[10px] tracking-[0.2em] uppercase font-body font-semibold hover:bg-gold-light transition-colors shadow-[0_10px_24px_rgba(201,168,76,0.15)]">
                       <ShoppingBag size={14} />
                       Add to Cart
                     </button>
-                    <button className="w-12 flex items-center justify-center bg-charcoal border border-gold/20 text-gold hover:bg-gold hover:text-black transition-colors">
+                    <button className="w-12 flex items-center justify-center rounded-md bg-black/60 border border-gold/20 text-gold hover:bg-gold hover:text-black transition-colors backdrop-blur-sm">
                       <Heart size={14} />
                     </button>
                   </div>
                 </div>
 
                 {/* Info area */}
-                <div className="p-4">
+                <div className="p-4 md:p-5">
                   <p className="text-gold text-[10px] tracking-[0.3em] uppercase font-body mb-1">
                     {product.category}
                   </p>
-                  <h3 className="font-display text-lg text-ivory mb-1">
+                  <h3 className="font-display text-lg text-ivory mb-1 leading-tight">
                     {product.name}
                   </h3>
-                  <p className="text-smoke text-xs mb-2">
+                  <p className="text-smoke text-xs mb-2 line-clamp-1">
                     {product.topNotes.join(', ')}
                   </p>
                   <div className="flex items-center gap-2 mb-3">
@@ -295,7 +282,7 @@ export function BestSellers() {
                       ({product.reviews})
                     </span>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <span className="text-gold font-body font-semibold">
                       ₹{product.price.toLocaleString()}
                     </span>

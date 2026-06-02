@@ -3,6 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const collections = [
   {
@@ -10,55 +11,30 @@ const collections = [
     count: '12 Fragrances',
     slug: 'oud-royale',
     description: 'The pinnacle of Arabian luxury',
-    gradient: 'from-amber-900/80 via-amber-950/60 to-black',
-    accent: '#d4a574',
+    image: '/assets/pics/collections/images.jpeg',
   },
   {
     name: 'Midnight Musk',
     count: '8 Fragrances',
     slug: 'midnight-musk',
     description: 'Dark, mysterious, unforgettable',
-    gradient: 'from-slate-800/80 via-slate-900/60 to-black',
-    accent: '#8b9dc3',
+    image: '/assets/pics/collections/shopping.jpeg',
   },
   {
     name: 'Rose & Amber',
     count: '10 Fragrances',
     slug: 'rose-amber',
     description: 'Romance in every note',
-    gradient: 'from-rose-900/80 via-rose-950/60 to-black',
-    accent: '#c9748a',
+    image: '/assets/pics/collections/shopping-2.jpeg',
   },
   {
     name: 'Bakhoor Noir',
     count: '6 Fragrances',
     slug: 'bakhoor-noir',
     description: 'Ancient incense reimagined',
-    gradient: 'from-stone-800/80 via-stone-900/60 to-black',
-    accent: '#a89984',
+    image: '/assets/pics/collections/images.jpeg',
   },
 ];
-
-function PerfumeWatermark({ accent }: { accent: string }) {
-  return (
-    <svg
-      width="120"
-      height="180"
-      viewBox="0 0 120 180"
-      fill="none"
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06]"
-    >
-      <rect x="48" y="5" width="24" height="8" rx="1" stroke={accent} strokeWidth="1" />
-      <rect x="44" y="13" width="32" height="22" rx="2" stroke={accent} strokeWidth="1" />
-      <path
-        d="M52 35 L52 48 Q52 52 48 55 L30 68 Q24 72 24 80 L24 160 Q24 166 30 166 L90 166 Q96 166 96 160 L96 80 Q96 72 90 68 L72 55 Q68 52 68 48 L68 35"
-        stroke={accent}
-        strokeWidth="1"
-      />
-      <line x1="32" y1="166" x2="88" y2="166" stroke={accent} strokeWidth="1" />
-    </svg>
-  );
-}
 
 export function FeaturedCollections() {
   const ref = useRef(null);
@@ -81,7 +57,7 @@ export function FeaturedCollections() {
         </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
           {collections.map((collection, index) => (
             <motion.div
               key={collection.slug}
@@ -92,42 +68,45 @@ export function FeaturedCollections() {
             >
               <Link href={`/shop/${collection.slug}`} className="block">
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                  className={`relative overflow-hidden group cursor-pointer ${
-                    index === 0 ? 'h-80 md:h-full min-h-[300px]' : 'h-80'
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  className={`relative overflow-hidden group cursor-pointer rounded-[1.5rem] border border-gold/10 bg-charcoal shadow-[0_20px_60px_rgba(0,0,0,0.35)] ${
+                    index === 0 ? 'h-[24rem] md:h-full md:min-h-[34rem]' : 'h-[18rem] md:h-[20rem]'
                   }`}
                 >
-                  {/* Background gradient */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-t ${collection.gradient} opacity-80`}
+                  <Image
+                    src={collection.image}
+                    alt={collection.name}
+                    fill
+                    priority={index === 0}
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
-                  {/* Decorative watermark */}
-                  <PerfumeWatermark accent={collection.accent} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(201,168,76,0.16),transparent_35%)] opacity-80" />
 
                   {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/5 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/8 transition-colors duration-500" />
 
                   {/* Content */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-8">
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
                     <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
-                      <p className="text-gold text-[10px] tracking-[0.3em] uppercase font-body mb-2">
+                      <p className="text-gold text-[10px] tracking-[0.35em] uppercase font-body mb-2">
                         {collection.count}
                       </p>
-                      <h3 className="font-display text-2xl md:text-3xl text-ivory mb-1">
+                      <h3 className="font-display text-2xl md:text-3xl text-ivory mb-2">
                         {collection.name}
                       </h3>
-                      <p className="text-smoke text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <p className="text-smoke text-sm max-w-sm opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                         {collection.description}
                       </p>
                     </div>
                   </div>
 
                   {/* Corner accent */}
-                  <div className="absolute top-4 right-4 w-8 h-8">
-                    <div className="absolute top-0 right-0 w-full h-px bg-gold/30" />
-                    <div className="absolute top-0 right-0 h-full w-px bg-gold/30" />
+                  <div className="absolute top-4 right-4 w-8 h-8 opacity-70 transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="absolute top-0 right-0 w-full h-px bg-gold/35" />
+                    <div className="absolute top-0 right-0 h-full w-px bg-gold/35" />
                   </div>
                 </motion.div>
               </Link>
