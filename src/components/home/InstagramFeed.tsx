@@ -82,7 +82,7 @@ export function InstagramFeed() {
         className="text-center mt-10"
       >
         <a
-          href="https://instagram.com/adeebperfumescme"
+          href="https://www.instagram.com/adeebperfumescme?igsh=MTlybWtzaDlzMXNmaA=="
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center rounded-full border border-gold/15 bg-white/5 px-5 py-3 text-gold text-xs tracking-[0.3em] font-body uppercase hover:border-gold/40 hover:bg-gold/10 transition-all duration-300"

@@ -1,5 +1,6 @@
 import { mockProducts } from '@/lib/mockData';
 import { notFound } from 'next/navigation';
+import { ProductDetails } from '@/components/product/ProductDetails';
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
@@ -20,7 +21,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <h1 className="font-display text-4xl md:text-5xl text-ivory mb-2">{product.name}</h1>
           <p className="text-smoke mb-8 text-lg">{product.price}</p>
           <div className="space-y-4">
-            <button className="w-full bg-gold text-black py-4 uppercase tracking-[0.2em] font-medium hover:bg-gold-light transition">Add to Cart</button>
+            <ProductDetails product={product} />
           </div>
           <div className="mt-12 pt-8 border-t border-gold/10 text-smoke leading-relaxed">
             Experience the luxury of {product.name}, a masterfully blended fragrance featuring notes of {product.topNotes?.join(', ')} and {product.baseNotes?.join(', ')}.

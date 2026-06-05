@@ -66,7 +66,7 @@ export function FeaturedCollections() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className={index === 0 ? 'md:row-span-2' : ''}
             >
-              <Link href={`/shop/${collection.slug}`} className="block">
+              <Link href={`/collections/${collection.slug}`} className="block">
                 <motion.div
                   whileHover={{ y: -6, scale: 1.01 }}
                   transition={{ duration: 0.35, ease: 'easeOut' }}

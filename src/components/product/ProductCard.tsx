@@ -34,7 +34,7 @@ export const ProductCard = memo(function ProductCard({ product }: { product: Par
             <rect x="15" y="5" width="10" height="15" strokeWidth="1" />
           </svg>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex gap-2">
+        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-0 md:translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex gap-2 bg-gradient-to-t from-charcoal to-transparent">
           <Button variant="primary" className="flex-1" size="sm" onClick={() => addItem({
             id: product.id + '-default',
             productId: product.id || '',

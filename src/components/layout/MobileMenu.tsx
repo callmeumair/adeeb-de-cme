@@ -14,7 +14,7 @@ const menuLinks = [
 ];
 
 const socialLinks = [
-  { label: 'Instagram', href: 'https://instagram.com' },
+  { label: 'Instagram', href: 'https://www.instagram.com/adeebperfumescme?igsh=MTlybWtzaDlzMXNmaA==' },
   { label: 'Twitter', href: 'https://x.com' },
   { label: 'Facebook', href: 'https://facebook.com' },
   { label: 'YouTube', href: 'https://youtube.com' },

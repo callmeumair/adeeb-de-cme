@@ -47,7 +47,7 @@ const theHouse = [
 ];
 
 const socialLinks = [
-  { label: 'IG', fullLabel: 'Instagram', href: 'https://instagram.com' },
+  { label: 'IG', fullLabel: 'Instagram', href: 'https://www.instagram.com/adeebperfumescme?igsh=MTlybWtzaDlzMXNmaA==' },
   { label: 'X', fullLabel: 'Twitter', href: 'https://x.com' },
   { label: 'FB', fullLabel: 'Facebook', href: 'https://facebook.com' },
   { label: 'YT', fullLabel: 'YouTube', href: 'https://youtube.com' },
